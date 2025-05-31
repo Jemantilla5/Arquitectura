@@ -1,0 +1,57 @@
+.container {
+    max-width: 500px;
+    margin: 80px auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="number"],
+form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+form button {
+    width: 100%;
+    padding: 14px;
+    background-color: #4d7b6e;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #3a6f5c;
+}
+
+.error {
+    color: red;
+    display: none;
+    margin-top: 10px;
+}
+
+/* Modo oscuro */
+body.dark main.container {
+    background-color: rgba(30, 30, 30, 0.95);
+    color: #eee;
+}
+
+body.dark form input,
+body.dark form button {
+    background-color: #444;
+    color: white;
+    border: 1px solid #666;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Retos</title>
+    <link rel="stylesheet" href="styles3.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Mis Retos Ambientales</h2>
+        <ul id="retosList">
+            <!-- Se llenará con JS -->
+        </ul>
+        <button onclick="window.location.href='perfil.html'">Volver al perfil</button>
+    </div>
+
+    <script>
+        const retos = [
+            { id: 1, texto: "Reducir el uso de PC a menos de 3 horas diarias", completado: false },
+            { id: 2, texto: "No usar bolsas plásticas esta semana", completado: false },
+            { id: 3, texto: "Reciclar al menos 3 veces esta semana", completado: false }
+        ];
+
+        const retosGuardados = JSON.parse(localStorage.getItem("retos")) || retos;
+
+        function renderRetos() {
+            const ul = document.getElementById('retosList');
+            ul.innerHTML = '';
+            retosGuardados.forEach((reto, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <label>
+                        <input type="checkbox" ${reto.completado ? 'checked' : ''} onchange="toggleReto(${index})">
+                        ${reto.texto}
+                    </label>
+                `;
+                ul.appendChild(li);
+            });
+        }
+
+        function toggleReto(index) {
+            retosGuardados[index].completado = !retosGuardados[index].completado;
+            localStorage.setItem("retos", JSON.stringify(retosGuardados));
+            renderRetos();
+        }
+
+        renderRetos();
+        document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const nivel = params.get("nivel"); // "baja", "moderada", "alta"
+
+    let retos = [];
+
+    if (nivel === "baja") {
+        retos = [
+            { texto: "Sigue usando energía responsablemente", completado: false },
+            { texto: "Comparte tus hábitos sostenibles con amigos", completado: false }
+        ];
+    } else if (nivel === "moderada") {
+        retos = [
+            { texto: "Usa menos dispositivos eléctricos esta semana", completado: false },
+            { texto: "Reduce tus desplazamientos en carro", completado: false }
+        ];
+    } else if (nivel === "alta") {
+        retos = [
+            { texto: "Evita carne 3 días esta semana", completado: false },
+            { texto: "Haz reciclaje al menos 2 veces esta semana", completado: false },
+            { texto: "No uses bolsas plásticas por 7 días", completado: false }
+        ];
+    }
+
+    localStorage.setItem("retos", JSON.stringify(retos));
+    renderRetos(); // ya está definida si seguiste la estructura anterior
+});
+
+    </script>
+</body>
+</html>

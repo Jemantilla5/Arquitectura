@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootPrint Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #preguntaInicial div {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="preguntaInicial">
+            <h2>Pregunta Principal</h2>
+            <p>Si ves un cargador conectado sin uso, ¿lo desconectas?</p>
+            <div>
+                <label><input type="radio" name="pregunta1" value="si"> Sí</label>
+                <label><input type="radio" name="pregunta1" value="no"> No</label>
+            </div>
+            <button id="enviarRespuesta">Enviar Respuesta</button>
+        </div>
+
+        <div id="preguntasHuella" style="display:none;">
+            <h2>Calculadora de Huella de Carbono</h2>
+            <p>Para acceder a esta sección, por favor <a href="login.html">inicia sesión</a> o <a href="register.html">regístrate</a>.</p>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('enviarRespuesta').addEventListener('click', function() {
+            // Verificar si se seleccionó alguna respuesta
+            const respuestaSeleccionada = document.querySelector('input[name="pregunta1"]:checked');
+            
+            if (!respuestaSeleccionada) {
+                alert('Por favor, selecciona una respuesta antes de continuar.');
+            } else {
+                window.location.href = 'registro.html'; // Redirigir a index_2.html
+            }
+        });
+    </script>
+</body>
+</html>

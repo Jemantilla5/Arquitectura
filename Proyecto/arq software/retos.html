@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Retos</title>
+    <link rel="stylesheet" href="styles3.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Mis Retos Ambientales</h2>
+        <ul id="retosList">
+            <!-- Se llenará con JS -->
+        </ul>
+        <button onclick="window.location.href='perfil.html'">Volver al perfil</button>
+    </div>
+
+    <script>
+        // Retos base según nivel
+        const retosPorNivel = {
+            baja: [
+                { texto: "Sigue usando energía responsablemente", completado: false },
+                { texto: "Comparte tus hábitos sostenibles con amigos", completado: false }
+            ],
+            moderada: [
+                { texto: "Usa menos dispositivos eléctricos esta semana", completado: false },
+                { texto: "Reduce tus desplazamientos en carro", completado: false }
+            ],
+            alta: [
+                { texto: "Evita carne 3 días esta semana", completado: false },
+                { texto: "Haz reciclaje al menos 2 veces esta semana", completado: false },
+                { texto: "No uses bolsas plásticas por 7 días", completado: false }
+            ]
+        };
+
+        // Retos personalizados por peor aspecto
+        const retosPorAspecto = {
+            pcHours: "Reduce el uso de PC a menos de 3 horas diarias",
+            carKm: "Intenta usar transporte público o bicicleta en vez de carro",
+            meatConsumption: "Evita comer carne 3 días esta semana",
+            waterUsage: "Ahorra agua cerrando la llave mientras te cepillas los dientes",
+            recycling: "Recicla al menos 3 veces esta semana",
+            flights: "Evita vuelos cortos y opta por video llamadas",
+            standbyDevices: "Desconecta dispositivos que no uses para ahorrar energía",
+            plasticBags: "No uses bolsas plásticas esta semana",
+            bulbs: "Cambia bombillas a LED para ahorrar energía",
+            singleUse: "Evita productos de un solo uso durante esta semana"
+        };
+
+        function renderRetos(retos) {
+            const ul = document.getElementById('retosList');
+            ul.innerHTML = '';
+            retos.forEach((reto, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <label>
+                        <input type="checkbox" ${reto.completado ? 'checked' : ''} onchange="toggleReto(${index})">
+                        ${reto.texto}
+                    </label>
+                `;
+                ul.appendChild(li);
+            });
+        }
+
+        function toggleReto(index) {
+            retosGuardados[index].completado = !retosGuardados[index].completado;
+            localStorage.setItem("retos", JSON.stringify(retosGuardados));
+            renderRetos(retosGuardados);
+        }
+
+        // Cargar y mostrar retos al cargar la página
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const nivel = params.get("nivel") || "baja";
+
+            // Carga retos base según nivel
+            let retos = retosPorNivel[nivel] || retosPorNivel['baja'];
+
+            // Obtiene el peor aspecto desde localStorage
+            const peorAspecto = localStorage.getItem('worstCategory');
+
+            // Si hay un peor aspecto y tiene reto definido, agregarlo
+            if (peorAspecto && retosPorAspecto[peorAspecto]) {
+                retos.push({ texto: retosPorAspecto[peorAspecto], completado: false });
+            }
+
+            // Guardar en localStorage para persistencia
+            localStorage.setItem("retos", JSON.stringify(retos));
+            window.retosGuardados = retos; // para usar en toggleReto
+            renderRetos(retos);
+        });
+    </script>
+</body>
+</html>

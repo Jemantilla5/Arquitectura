@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FootPrint Calculator - Preguntas</title>
+    <link rel="stylesheet" href="styles5.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script defer src="script5.js"></script>
+</head>
+<body>
+    <!-- Menú hamburguesa -->
+    <div class="menu-toggle" id="menuToggle">
+        ☰
+    </div>
+
+    <!-- Menú desplegable -->
+    <div class="dropdown-menu" id="dropdownMenu">
+        <button onclick="window.location.href='perfil.html'">👤 Mi Cuenta</button>
+        <button id="toggleDarkMode">🌙 Modo Oscuro</button>
+    </div>
+
+    <div id="questions">
+        <h2>Responde las siguientes preguntas:</h2>
+        <form id="carbonForm">
+            <div class="question">
+                <label>¿Cuántas horas usas el PC al día?</label>
+                <input type="number" id="pcHours" min="0" required>
+                <span id="pcStatus"></span>
+                <div class="carbonBar" id="pcBarContainer">
+                    <div id="pcBar"></div>
+                    <p id="pcBarText"></p>
+                </div>
+            </div>
+            <div class="question">
+                <label>¿Cuántos km recorres en carro al día?</label>
+                <input type="number" id="carKm" min="0" required>
+                <span id="carStatus"></span>
+                <div class="carbonBar" id="carBarContainer">
+                    <div id="carBar"></div>
+                    <p id="carBarText"></p>
+                </div>
+            </div>
+            <div class="question">
+                <label>¿Cuántas veces a la semana comes carne roja?</label>
+                <input type="number" id="meatConsumption" min="0" required>
+                <span id="meatStatus"></span>
+                <div class="carbonBar" id="meatBarContainer">
+                    <div id="meatBar"></div>
+                    <p id="meatBarText"></p>
+                </div>
+            </div>
+            <div class="question">
+                <label>¿Cuántos litros de agua usas al día?</label>
+                <input type="number" id="waterUsage" min="0" required>
+                <span id="waterStatus"></span>
+                <div class="carbonBar" id="waterBarContainer">
+                    <div id="waterBar"></div>
+                    <p id="waterBarText"></p>
+                </div>
+            </div>
+            <div class="question">
+                <label>¿Cuántas veces reciclas a la semana?</label>
+                <input type="number" id="recycling" min="0" required>
+                <span id="recyclingStatus"></span>
+                <div class="carbonBar" id="recyclingBarContainer">
+                    <div id="recyclingBar"></div>
+                    <p id="recyclingBarText"></p>
+                </div>
+            </div>
+            <div class="question">
+                <label>¿Cuántos vuelos tomas al año?</label>
+                <input type="number" id="flights" min="0" required>
+                <span id="flightsStatus"></span>
+                <div class="carbonBar" id="flightsBarContainer">
+                    <div id="flightsBar"></div>
+                    <p id="flightsBarText"></p>
+                </div>
+            </div>
+            <div class="question">
+                <label>¿Cuántos dispositivos electrónicos dejas en stand-by?</label>
+                <input type="number" id="standbyDevices" min="0" required>
+                <span id="standbyStatus"></span>
+                <div class="carbonBar" id="standbyBarContainer">
+                    <div id="standbyBar"></div>
+                    <p id="standbyBarText"></p>
+                </div>
+            </div>
+            <div class="question">
+                <label>¿Cuántas bolsas plásticas usas al mes?</label>
+                <input type="number" id="plasticBags" min="0" required>
+                <span id="plasticStatus"></span>
+                <div class="carbonBar" id="plasticBarContainer">
+                    <div id="plasticBar"></div>
+                    <p id="plasticBarText"></p>
+                </div>
+            </div>
+            <div class="question">
+                <label>¿Cuántas bombillas incandescentes usas en casa?</label>
+                <input type="number" id="bulbs" min="0" required>
+                <span id="bulbsStatus"></span>
+                <div class="carbonBar" id="bulbsBarContainer">
+                    <div id="bulbsBar"></div>
+                    <p id="bulbsBarText"></p>
+                </div>
+            </div>
+            <div class="question">
+                <label>¿Cuántos productos de un solo uso consumes a la semana?</label>
+                <input type="number" id="singleUse" min="0" required>
+                <span id="singleUseStatus"></span>
+                <div class="carbonBar" id="singleUseBarContainer">
+                    <div id="singleUseBar"></div>
+                    <p id="singleUseBarText"></p>
+                </div>
+            </div>
+            <div id="carbonFootprintResult" style="display: none;">
+                <div id="carbonBarContainer">
+                    <div id="carbonBar"></div>
+                    <p id="carbonBarText"></p>
+                </div>
+            </div>
+            <div id="redirectMessage" style="display: none; text-align: center; margin-top: 10px; font-size: 18px;"></div>
+
+            <button type="submit">Calcular</button>
+        </form>
+
+        <!-- Resultado de la huella de carbono -->
+        <p id="resultText" style="display:none;"></p>
+
+        <!-- Botón para ir a reto.html -->
+        <button id="retoButton" style="display:none;" onclick="irAReto()">Ver mi reto</button>
+    </div>
+
+    <div id="carbonFootprintResult">
+        <div id="carbonBarContainer">
+            <div id="carbonBar"></div>
+        </div>
+        <p id="carbonBarText"></p>
+    </div>
+
+    <!-- Contenedor para partículas -->
+    <div id="particles-js"></div>
+</body>
+</html>

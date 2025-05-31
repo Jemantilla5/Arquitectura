@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil de Usuario - FootPrint Calculator</title>
+  <link rel="stylesheet" href="styles3.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Mi Perfil</h2>
+
+    <div id="datosPerfil">
+      <p><strong>Nombres:</strong> <span id="nombre"></span></p>
+      <p><strong>Apellidos:</strong> <span id="apellido"></span></p>
+      <p><strong>Correo:</strong> <span id="correo"></span></p>
+      <p><strong>Edad:</strong> <span id="edad"></span></p>
+    </div>
+
+    <div class="acciones">
+      <button onclick="window.location.href='retos.html'">🎯 Mis Retos</button>
+      <button onclick="mostrarFormulario()">✏️ Modificar Cuenta</button>
+      <button onclick="eliminarCuenta()">🗑️ Eliminar Cuenta</button>
+      <button onclick="cerrarSesion()">🚪 Cerrar Sesión</button>
+    </div>
+
+    <form id="formActualizar" style="display:none; margin-top: 20px;">
+      <input type="text" id="nuevoNombre" placeholder="Nuevo Nombre" required>
+      <input type="text" id="nuevoApellido" placeholder="Nuevo Apellido" required>
+      <input type="number" id="nuevaEdad" placeholder="Nueva Edad" required>
+      <button type="submit">Guardar Cambios</button>
+    </form>
+  </div>
+
+  <script>
+    // Cargar datos del usuario
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    if (!usuario) {
+      window.location.href = 'login.html';
+    } else {
+      document.getElementById('nombre').textContent = usuario.nombre;
+      document.getElementById('apellido').textContent = usuario.apellido;
+      document.getElementById('correo').textContent = usuario.email;
+      document.getElementById('edad').textContent = usuario.edad;
+    }
+
+    // Mostrar formulario
+    function mostrarFormulario() {
+      document.getElementById('formActualizar').style.display = 'block';
+      document.getElementById('nuevoNombre').value = usuario.nombre;
+      document.getElementById('nuevoApellido').value = usuario.apellido;
+      document.getElementById('nuevaEdad').value = usuario.edad;
+    }
+
+    // Cerrar sesión
+    function cerrarSesion() {
+      localStorage.removeItem('usuario');
+      window.location.href = 'login.html';
+    }
+
+    // Eliminar cuenta
+    function eliminarCuenta() {
+      if (confirm("¿Seguro que quieres eliminar tu cuenta?")) {
+        fetch(`http://localhost:3000/eliminar`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email: usuario.email })
+        })
+        .then(res => {
+          if (res.ok) {
+            alert("Cuenta eliminada ✅");
+            localStorage.removeItem('usuario');
+            window.location.href = 'registro.html';
+          } else {
+            alert("Error al eliminar la cuenta ❌");
+          }
+        });
+      }
+    }
+
+    // Actualizar datos
+    document.getElementById('formActualizar').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nuevosDatos = {
+        nombre: document.getElementById('nuevoNombre').value,
+        apellido: document.getElementById('nuevoApellido').value,
+        edad: parseInt(document.getElementById('nuevaEdad').value),
+        email: usuario.email
+      };
+
+      fetch('http://localhost:3000/actualizar', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(nuevosDatos)
+      })
+      .then(res => {
+        if (res.ok) {
+          alert("Cuenta actualizada ✅");
+          localStorage.setItem('usuario', JSON.stringify(nuevosDatos));
+          window.location.reload();
+        } else {
+          alert("Error al actualizar ❌");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

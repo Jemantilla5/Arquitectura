@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Inicio de Sesión - FootPrint Calculator</title>
+  <link rel="stylesheet" href="styles3.css" />
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script defer src="script2.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Iniciar Sesión</h2>
+    <form id="loginForm">
+      <input type="email" id="logCorreo" placeholder="Correo Electrónico" required />
+      <input type="password" id="logPass" placeholder="Contraseña" required />
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+    <p>No tienes cuenta? <a href="registro.html">Crea una cuenta aquí</a></p>
+  </div>
+
+  <!-- Botón de menú -->
+  <div class="menu-toggle">☰</div>
+
+  <!-- Menú desplegable -->
+  <div class="dropdown-menu" id="dropdownMenu">
+    <button id="toggleDarkMode">🌙 Modo Oscuro</button>
+  </div>
+
+  <!-- Contenedor para partículas -->
+  <div id="particles-js"></div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const email = document.getElementById('logCorreo').value;
+      const password = document.getElementById('logPass').value;
+
+      fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      })
+      .then(async (response) => {
+        if (response.ok) {
+          const data = await response.json();
+
+          // Guardar datos del usuario en localStorage
+          localStorage.setItem('usuario', JSON.stringify(data.usuario));
+
+          alert('Inicio de sesión exitoso ✅');
+          window.location.href = 'perfil.html';
+        } else if (response.status === 401) {
+          alert('Credenciales incorrectas ❌');
+        } else if (response.status === 404) {
+          alert('Correo no encontrado ❌');
+        } else {
+          const errorText = await response.text();
+          alert('Error: ' + errorText);
+        }
+      })
+      .catch((error) => {
+        console.error('Error en la conexión:', error);
+        alert('Error en la conexión con el servidor');
+      });
+    });
+  </script>
+</body>
+</html>

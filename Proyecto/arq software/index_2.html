@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información sobre Huella de Carbono</title>
+    <link rel="stylesheet" href="styles2.css">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script defer src="script3.js"></script>
+</head>
+<body>
+    <!-- Partículas -->
+    <div id="particles-js"></div>
+
+    <!-- Botón de menú -->
+    <div class="menu-toggle">☰</div>
+
+    <!-- Menú desplegable -->
+    <div class="dropdown-menu" id="dropdownMenu">
+        <button id="toggleDarkMode">🌙 Modo Oscuro</button>
+    </div>
+
+    <!-- Barra superior derecha -->
+    <div style="position: absolute; top: 15px; right: 20px; z-index: 2;">
+        <button onclick="window.location.href='login.html'">Iniciar sesión</button>
+        <button onclick="window.location.href='registro.html'">Crear cuenta</button>
+    </div>
+
+    <div class="container">
+        <h2>Información sobre la Huella de Carbono</h2>
+        <div id="infoContainer">
+            <p>Cargando información...</p>
+        </div>
+
+        <div id="contenidoEcologia">
+            <h3>Consejos para Reducir tu Huella de Carbono</h3>
+            <ul>
+                <li><strong>Usa energías renovables:</strong> Opta por fuentes de energía solar, eólica o hidroeléctrica siempre que sea posible.</li>
+                <li><strong>Reduce el uso del automóvil:</strong> Usa transporte público, comparte viajes o camina para reducir las emisiones.</li>
+                <li><strong>Recicla y reutiliza:</strong> Trata de reducir el desperdicio y reutiliza productos siempre que puedas.</li>
+                <li><strong>Consume productos locales y sostenibles:</strong> Elige productos que generen menos impacto ambiental en su producción y distribución.</li>
+            </ul>
+            
+            <h3>Categorías de Huella de Carbono</h3>
+
+            <p><strong>Uso de electricidad (PC, bombillas, etc.)</strong>:</p>
+            <ul>
+                <li class="ligero"><strong>Ligero:</strong> Menos de 2 horas al día en PC, uso de bombillas LED.</li>
+                <li class="moderado"><strong>Moderado:</strong> 2-4 horas al día en PC, uso de bombillas incandescentes.</li>
+                <li class="grave"><strong>Grave:</strong> Más de 4 horas al día en PC, uso de muchas bombillas incandescentes.</li>
+            </ul>
+
+            <p><strong>Transporte (carro y vuelos)</strong>:</p>
+            <ul>
+                <li class="ligero"><strong>Ligero:</strong> Menos de 10 km al día en carro, menos de 2 vuelos al año.</li>
+                <li class="moderado"><strong>Moderado:</strong> 10-30 km al día en carro, 2-5 vuelos al año.</li>
+                <li class="grave"><strong>Grave:</strong> Más de 30 km al día en carro, más de 5 vuelos al año.</li>
+            </ul>
+
+            <p><strong>Alimentación (carne roja)</strong>:</p>
+            <ul>
+                <li class="ligero"><strong>Ligero:</strong> Menos de 1 vez por semana.</li>
+                <li class="moderado"><strong>Moderado:</strong> 1-3 veces por semana.</li>
+                <li class="grave"><strong>Grave:</strong> Más de 3 veces por semana.</li>
+            </ul>
+
+            <p><strong>Consumo de plásticos y reciclaje</strong>:</p>
+            <ul>
+                <li class="ligero"><strong>Ligero:</strong> Menos de 5 bolsas plásticas al mes, recicla más de 3 veces por semana.</li>
+                <li class="moderado"><strong>Moderado:</strong> 5-10 bolsas plásticas al mes, recicla 2 veces por semana.</li>
+                <li class="grave"><strong>Grave:</strong> Más de 10 bolsas plásticas al mes, recicla menos de 2 veces por semana.</li>
+            </ul>
+
+            <p><strong>Consumo de agua</strong>:</p>
+            <ul>
+                <li class="ligero"><strong>Ligero:</strong> Menos de 100 litros al día.</li>
+                <li class="moderado"><strong>Moderado:</strong> 100-200 litros al día.</li>
+                <li class="grave"><strong>Grave:</strong> Más de 200 litros al día.</li>
+            </ul>
+            
+            <button onclick="obtenerInformacion()">Obtener Información Actualizada</button>
+            <button onclick="irAIndex()">Ayúdanos a Ayudarnos</button>
+        </div>
+    </div>
+
+    <script>
+        function obtenerInformacion() {
+            const url = 'https://api.carbonintensity.org.uk/intensity';
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const intensidad = data.data[0].intensity.forecast;
+                    const region = data.data[0].from;
+                    document.getElementById('infoContainer').innerHTML = `
+                        <h3>Intensidad de Carbono</h3>
+                        <p>La intensidad de carbono actual es: ${intensidad} gCO2/kWh.</p>
+                        <p>Estos datos corresponden a la región desde: ${region}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error al obtener la información:', error);
+                    document.getElementById('infoContainer').innerHTML = `<p>No se pudo obtener la información. Intenta más tarde.</p>`;
+                });
+        }
+
+        function irAIndex() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
